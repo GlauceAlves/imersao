@@ -20,7 +20,9 @@ function pesquisar() {
     return
   }
 
-  campoPesquisa = campoPesquisa.toLowerCase()
+  // Converte para minúsculas e remove acentos do campo de pesquisa
+  campoPesquisa = campoPesquisa.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  // campoPesquisa = campoPesquisa.toLowerCase()
 
   // inicializa a string vazia para armazenar os resultados 
   let resultados = "";
@@ -38,7 +40,7 @@ function pesquisar() {
     // verifica dados dentro da condição de pesquisa
     if (dado.titulo.includes(campoPesquisa) || dado.descricao.includes(campoPesquisa) || dado.tags.includes(campoPesquisa)){
       // Constrói o HTML para cada resultado, formatando o título, descrição e link
-      resultados += `
+      resultados = `
    <div class="item-resultado">
      <h2>
        <a href="#" target="_blank">${dado.titulo}</a>
@@ -55,5 +57,5 @@ function pesquisar() {
     resultados = "<p>Nada foi encontrado.</p>"
   }
   // Adiciona os resultados construídos ao conteúdo HTML da seção
-  section.innerHTML += resultados;
+  section.innerHTML = resultados;
 }
